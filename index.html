@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0a5c2a">
+  <title>🎰 3D 推币机 | Coin Pusher Casino</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 顶部：老虎机 -->
+    <div id="slot-machine">
+      <div id="slot-header">🎰 BONUS 老虎机 🎰</div>
+      <div id="reels">
+        <div class="reel" id="reel1">🍒</div>
+        <div class="reel" id="reel2">🍒</div>
+        <div class="reel" id="reel3">🍒</div>
+      </div>
+      <div id="slot-result">投币即可转老虎机！</div>
+    </div>
+
+    <!-- 中间：3D 画布 -->
+    <div id="canvas-wrap">
+      <canvas id="game"></canvas>
+      <div id="hint">👆 点这里瞄准投币位置</div>
+    </div>
+
+    <!-- 底部：控制栏 -->
+    <div id="controls">
+      <div id="stats">
+        <div class="stat">
+          <span class="label">得分</span>
+          <span class="value" id="score">0</span>
+        </div>
+        <div class="stat">
+          <span class="label">已收集</span>
+          <span class="value" id="collected">0</span>
+        </div>
+      </div>
+      <button id="drop-btn">
+        <span class="coin-emoji">🪙</span>
+        <span class="btn-text">投币</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 中奖提示 -->
+  <div id="win-popup">
+    <div class="win-box">
+      <div id="win-title"></div>
+      <div id="win-msg"></div>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.module.js",
+      "cannon-es": "./vendor/cannon-es.js"
+    }
+  }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body { width: 100%; height: 100%; overflow: hidden; }
+
+body {
+  font-family: 'Arial Black', 'PingFang SC', 'Microsoft YaHei', Arial, sans-serif;
+  background: radial-gradient(circle at 50% 20%, #123d1f 0%, #081f0e 70%);
+  color: #fff;
+  user-select: none;
+  touch-action: none;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 老虎机 ===== */
+#slot-machine {
+  background: linear-gradient(180deg, #a3001e 0%, #d4002b 45%, #ff6b00 100%);
+  border-bottom: 5px solid #ffd700;
+  padding: 8px 10px 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.6), inset 0 -3px 10px rgba(0,0,0,.35);
+  z-index: 10;
+  flex-shrink: 0;
+}
+#slot-header {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,215,0,.9);
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+#reels { display: flex; justify-content: center; gap: 8px; }
+.reel {
+  width: 78px;
+  height: 78px;
+  background: linear-gradient(180deg, #101020 0%, #05050c 100%);
+  border: 4px solid #ffd700;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  box-shadow: inset 0 0 16px rgba(255,215,0,.25), 0 3px 8px rgba(0,0,0,.5);
+  transition: transform .08s;
+}
+.reel.spinning { animation: reelShake .08s linear infinite; }
+@keyframes reelShake {
+  0% { transform: translateY(-1px); }
+  50% { transform: translateY(1px); }
+  100% { transform: translateY(-1px); }
+}
+#slot-result {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffe66d;
+  min-height: 18px;
+  margin-top: 5px;
+  text-shadow: 0 0 8px rgba(255,215,0,.8);
+}
+
+/* ===== 3D 画布 ===== */
+#canvas-wrap { flex: 1; position: relative; min-height: 0; }
+#game { width: 100%; height: 100%; display: block; }
+#hint {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.55);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #ffe66d;
+  pointer-events: none;
+  transition: opacity .6s;
+}
+
+/* ===== 控制栏 ===== */
+#controls {
+  background: linear-gradient(180deg, #a3001e 0%, #d4002b 100%);
+  border-top: 5px solid #ffd700;
+  padding: 10px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 20px rgba(0,0,0,.6);
+  z-index: 10;
+  flex-shrink: 0;
+}
+#stats { display: flex; gap: 22px; }
+.stat { display: flex; flex-direction: column; }
+.stat .label {
+  font-size: 11px;
+  color: rgba(255,255,255,.85);
+  letter-spacing: 1px;
+}
+.stat .value {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 14px rgba(255,215,0,.9);
+}
+
+#drop-btn {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 5px solid #ff6b00;
+  background: radial-gradient(circle at 30% 30%, #fff08a, #ffd700 55%, #ffb700);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(255,215,0,.7), inset 0 -5px 12px rgba(0,0,0,.28), inset 0 4px 12px rgba(255,255,255,.5);
+  transition: transform .12s;
+}
+#drop-btn:active { transform: scale(.9); }
+#drop-btn .coin-emoji { font-size: 36px; filter: drop-shadow(0 2px 3px rgba(0,0,0,.3)); }
+#drop-btn .btn-text { font-size: 15px; font-weight: bold; color: #8b0000; text-shadow: 0 1px 1px rgba(255,255,255,.5); }
+
+/* ===== 中奖弹窗 ===== */
+#win-popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .3s;
+  z-index: 1000;
+}
+#win-popup.show { opacity: 1; }
+.win-box {
+  background: linear-gradient(135deg, #ff0080, #ff6b00);
+  padding: 26px 32px;
+  border-radius: 22px;
+  border: 6px solid #ffd700;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(255,215,0,1), 0 0 90px rgba(255,0,128,.8);
+  transform: scale(0);
+  transition: transform .35s cubic-bezier(.68,-.55,.27,1.55);
+}
+#win-popup.show .win-box { transform: scale(1); }
+#win-title { font-size: 38px; color: #ffd700; text-shadow: 0 0 24px rgba(255,215,0,1); }
+#win-msg { font-size: 18px; color: #fff; margin-top: 8px; }
+
+@media (max-width: 480px) {
+  .reel { width: 64px; height: 64px; font-size: 36px; }
+  #drop-btn { width: 80px; height: 80px; }
+}
